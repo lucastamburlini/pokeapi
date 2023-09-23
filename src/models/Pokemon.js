@@ -46,5 +46,5 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
     },
 
-  });
+  }, { timestamps: false });
 };
