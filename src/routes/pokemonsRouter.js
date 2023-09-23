@@ -9,4 +9,8 @@ pokemonsRouter.get("/:idPokemon", (req, res) => {
     res.send("NIY: ESTA RUTA TRAE INFO DE UN POKE")
 });
 
+pokemonsRouter.get("/name", (req, res) => {
+    res.send("NIY: ESTA RUTA TRAE INFO DE UN POKE")
+});
+
 module.exports = pokemonsRouter;
