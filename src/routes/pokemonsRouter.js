@@ -13,7 +13,9 @@ pokemonsRouter.get("/:id", (req, res) => {
 });
 
 pokemonsRouter.post("/pokemons", (req, res) => {
-    res.send("NIY: ESTA RUTA TRAE LOS DATOS PARA CREAR UN POKEMON")
+    const { id, name, image, hp, attack, defense, speed, height, weight } = req.body
+
+    res.send("NIY: ESTA RUTA CREA UN POKEMON")
 });
 
 module.exports = pokemonsRouter;
