@@ -7,7 +7,7 @@ const { Router } = require("express");
 const typesRouter = Router()
 
 typesRouter.get("/", (req, res) => {
-    res.send("ESTA RUTA TRAE EL TYPO")
+    res.send("ESTA RUTA TRAE EL TYPE DE POKEMON")
 })
 
 module.exports = typesRouter;
