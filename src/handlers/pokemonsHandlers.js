@@ -1,3 +1,5 @@
+const { createPokemons } = require("../controllers/pokemonControllers");
+
 const getAllPokemons = (req, res) => {
     const { name } = req.query;
     if (name !== undefined) res.send(`NIY: ESTA RUTA TRAE NAME:${name}`)
@@ -9,12 +11,14 @@ const getByIdPokemons = (req, res) => {
     res.send(`NIY: ESTA RUTA TRAE INFO DE UN POKE CON ID ${id}`)
 }
 
-const createPokemon = (req, res) => {
-    const { id, name, image, hp, attack, defense, speed, height, weight } = req.body
-
-    res.send(`NIY: ESTA RUTA CREA UN POKEMON CON LOS SIGUIENTES DATOS:
-    id:${id}, name:${name}, image:${image}, hp:${hp}, attack:${attack}, defense:${defense}, speed:${speed}, height:${height}, weight:${weight}
-    `)
+const createPokemon = async (req, res) => {
+    try {
+        const { name, image, hp, attack, defense, speed, height, weight } = req.body
+        const newPokemon = await createPokemons(name, image, hp, attack, defense, speed, height, weight);
+        res.status(201).json(newPokemon)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
 module.exports = {
