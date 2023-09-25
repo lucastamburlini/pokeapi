@@ -1,23 +1,11 @@
 const { Router } = require("express");
+const { createPokemon, getByIdPokemons, getAllPokemons } = require("../handlers/pokemonsHandlers");
 const pokemonsRouter = Router()
 
-pokemonsRouter.get("/", (req, res) => {
-    const { name } = req.query;
-    if (name !== undefined) res.send(`NIY: ESTA RUTA TRAE NAME:${name}`)
-    else res.send("NIY: ESTA RUTA TRAE A TODOS LOS POKE")
-});
+pokemonsRouter.get("/", getAllPokemons);
 
-pokemonsRouter.get("/:id", (req, res) => {
-    const { id } = req.params;
-    res.send(`NIY: ESTA RUTA TRAE INFO DE UN POKE CON ID ${id}`)
-});
+pokemonsRouter.get("/:id", getByIdPokemons);
 
-pokemonsRouter.post("/pokemons", (req, res) => {
-    const { id, name, image, hp, attack, defense, speed, height, weight } = req.body
-
-    res.send(`NIY: ESTA RUTA CREA UN POKEMON CON LOS SIGUIENTES DATOS:
-    id:${id}, name:${name}, image:${image}, hp:${hp}, attack:${attack}, defense:${defense}, speed:${speed}, height:${height}, weight:${weight}
-    `)
-});
+pokemonsRouter.post("/pokemons", createPokemon);
 
 module.exports = pokemonsRouter;

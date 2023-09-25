@@ -4,10 +4,9 @@ En una primera instancia, cuando la base de datos este vacía, deberás guardar 
 Estos deben ser obtenidos de la API (se evaluará que no haya hardcodeo). Luego de obtenerlos de la API, deben ser guardados en la base de datos para su posterior consumo desde allí. */
 
 const { Router } = require("express");
+const { getTypePokemons } = require("../handlers/typesHandlers");
 const typesRouter = Router()
 
-typesRouter.get("/", (req, res) => {
-    res.send("ESTA RUTA TRAE EL TYPE DE POKEMON")
-})
+typesRouter.get("/", getTypePokemons)
 
 module.exports = typesRouter;
