@@ -1,17 +1,24 @@
-const { createPokemons } = require("../controllers/pokemonControllers");
+const { createPokemons, getPokemonById } = require("../controllers/pokemonControllers");
 
-const getAllPokemons = (req, res) => {
+const getAllPokemonsHandler = (req, res) => {
     const { name } = req.query;
     if (name !== undefined) res.send(`NIY: ESTA RUTA TRAE NAME:${name}`)
     else res.send("NIY: ESTA RUTA TRAE A TODOS LOS POKE")
 }
 
-const getByIdPokemons = (req, res) => {
+const getByIdPokemonsHandler  = async (req, res) => {
     const { id } = req.params;
-    res.send(`NIY: ESTA RUTA TRAE INFO DE UN POKE CON ID ${id}`)
+    const source = isNaN(id) ? "BDD" : "API";
+
+    try {
+        const pokemon = await getPokemonById(id, source);
+        res.status(200).json(pokemon)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
-const createPokemon = async (req, res) => {
+const createPokemonHandler = async (req, res) => {
     try {
         const { name, image, hp, attack, defense, speed, height, weight } = req.body
         const newPokemon = await createPokemons(name, image, hp, attack, defense, speed, height, weight);
@@ -22,7 +29,7 @@ const createPokemon = async (req, res) => {
 }
 
 module.exports = {
-    getAllPokemons,
-    getByIdPokemons,
-    createPokemon
+    getAllPokemonsHandler,
+    getByIdPokemonsHandler,
+    createPokemonHandler
 }
