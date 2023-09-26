@@ -1,4 +1,5 @@
-const { Pokemon } = require("../db")
+const { Op } = require("sequelize");
+const { Pokemon, Type} = require("../db");
 const axios = require("axios");
 
 const URL = "https://pokeapi.co/api/v2/pokemon/";
@@ -12,17 +13,12 @@ const getAllPokemons = async () => {
 }
 
 const searchPokemonByName = async (name) => {
-    const databasePokemon = await Pokemon.findOne({ where: { name: name } });
-    const response = await axios.get(URL);
-    const pokemonsApi = response.data;
-    const pokemonData = pokemonsApi.results.find((pokemon) => pokemon.name === name);
-    if (pokemonData) {
-        const pokemonResponse = await axios.get(pokemonData.url);
-        const fullPokemonData = pokemonResponse.data;
-        return fullPokemonData
-    }
+    const databasePokemon = getAllPokemons();
+    const databasePokemonFiltered = (await databasePokemon).filter(pokemon => pokemon.name === name)
 
-
+    const response = await axios.get(`${URL}${name}`);
+    const pokemonData = response.data;
+    return { ...databasePokemonFiltered, ...databasePokemon }
 }
 
 const getPokemonById = async (id, source) => {
@@ -34,8 +30,31 @@ const getPokemonById = async (id, source) => {
 }
 
 
-const createPokemons = async (name, image, hp, attack, defense, speed, height, weight) =>
-    await Pokemon.create({ name, image, hp, attack, defense, speed, height, weight });
+const createPokemons = async (
+    name,
+    image,
+    hp,
+    attack,
+    defense,
+    speed,
+    height,
+    weight,
+    types
+) => {
+    const newPokemon = await Pokemon.create({
+        name,
+        imagen,
+        vida,
+        ataque,
+        defensa,
+        velocidad,
+        altura,
+        peso,
+        types,
+    });
+    const typeDb = await Type
+}
+
 
 
 module.exports = {
