@@ -31,9 +31,14 @@ const getAllPokemonsBdd = async () => {
 }
 
 const getAllPokemons = async () => {
-    const pokemons_BDD = await getAllPokemonsBdd();
-    const pokemons_API = await getAllPokemonsApi();
-    return [...pokemons_BDD, ...pokemons_API]
+    try {
+        const pokemons_BDD = await getAllPokemonsBdd();
+        const pokemons_API = await getAllPokemonsApi();
+        return [...pokemons_BDD, ...pokemons_API];
+    } catch (error) {
+        console.error("Error al obtener todos los Pokémon:", error);
+        throw error;
+    }
 }
 
 /* -------------------------------------------------------- */
@@ -41,19 +46,26 @@ const getAllPokemons = async () => {
 /* -------------------------------------------------------- */
 
 const getAllPokemonsBddByName = async (name) => {
-    return await Pokemon.findAll({
-        where: {
-            name: name
-        },
-        include: {
-            model: Type,
-            attributes: ["name"],
-            through: {
-                attributes: [],
+    try {
+        const pokemons = await Pokemon.findAll({
+            where: {
+                name: name
             },
-        }
-    });
+            include: {
+                model: Type,
+                attributes: ["name"],
+                through: {
+                    attributes: [],
+                },
+            }
+        });
+        return pokemons;
+    } catch (error) {
+        console.error("Error:", error);
+        throw error;
+    }
 }
+
 
 const pokemonByNameApi = async (name) => {
     const response = await axios.get(`${URL}${name}`);
@@ -63,11 +75,17 @@ const pokemonByNameApi = async (name) => {
 }
 
 const searchPokemonByName = async (name) => {
-    const pokemons_BDD = await getAllPokemonsBddByName(name);
-    const pokemons_API = await pokemonByNameApi(name);
-    console.log(pokemons_API);
-
-    return [{ ...pokemons_BDD, ...pokemons_API }]
+    try {
+        const pokemons_BDD = await getAllPokemonsBddByName(name);
+        if (pokemons_BDD.length > 0) {
+            return pokemons_BDD;
+        }
+        const pokemons_API = await pokemonByNameApi(name);
+        return [pokemons_API];
+    } catch (error) {
+        console.error("Error al buscar el Pokémon por nombre:", error);
+        throw error;
+    }
 }
 
 /* -------------------------------------------------------- */
@@ -81,16 +99,20 @@ const getPokemonById = async (id, source) => {
             : await Pokemon.findByPk(id, {
                 include: {
                     model: Type,
+                    attributes: ["name"],
+                    through: {
+                        attributes: [],
+                    },
                 }
             });
-    return pokemon;
+    return [pokemon];
 }
 
 const pokemonIdApi = async (id) => {
     const response = await axios.get(`${URL}${id}`);
     const { data } = response
     const pokemon = clearPokemon(data)
-    return pokemon
+    return [pokemon]
 }
 
 /* -------------------------------------------------------- */

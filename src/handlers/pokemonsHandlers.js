@@ -7,9 +7,14 @@ const getAllPokemonsHandler = async (req, res) => {
         const results = name
             ? await searchPokemonByName(name)
             : await getAllPokemons();
-        res.status(200).json(results)
+
+        if (!results || results.length === 0) {
+            res.status(404).json({ error: "No se encontraron Pokémon" });
+        } else {
+            res.status(200).json(results);
+        }
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        res.status(500).json({ error: "Error interno del servidor" });
     }
 }
 
