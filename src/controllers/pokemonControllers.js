@@ -3,9 +3,10 @@ const axios = require("axios");
 const { clearPokemon } = require("../utils");
 
 const URL = "https://pokeapi.co/api/v2/pokemon/";
+// const URL = "https://pokeapi.co/api/v2/pokemon/?limit=1229&offset=0";
 
 /* -------------------------------------------------------- */
-// Funciones para buscar a todos los pokemones
+// Funciones para traer a todos los pokemones
 /* -------------------------------------------------------- */
 
 const getAllPokemonsApi = async () => {
@@ -89,23 +90,28 @@ const searchPokemonByName = async (name) => {
 }
 
 /* -------------------------------------------------------- */
-// Funciones para buscar por ID
+// Funciones para buscar por ID 
 /* -------------------------------------------------------- */
 
 const getPokemonById = async (id, source) => {
-    const pokemon =
-        source === "API"
-            ? await pokemonIdApi(id)
-            : await Pokemon.findByPk(id, {
-                include: {
-                    model: Type,
-                    attributes: ["name"],
-                    through: {
-                        attributes: [],
-                    },
-                }
-            });
-    return [pokemon];
+    try {
+        const pokemon =
+            source === "API"
+                ? await pokemonIdApi(id)
+                : await Pokemon.findByPk(id, {
+                    include: {
+                        model: Type,
+                        attributes: ["name"],
+                        through: {
+                            attributes: [],
+                        },
+                    }
+                });
+        return [pokemon];
+    } catch (error) {
+        console.error("Error al buscar el Pokémon por ID:", error);
+        throw error;
+    }
 }
 
 const pokemonIdApi = async (id) => {
