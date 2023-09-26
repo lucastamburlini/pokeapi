@@ -132,27 +132,37 @@ const createPokemons = async (
     types
 ) => {
     const lowerCaseName = name.toLowerCase();
-    const newPokemon = await Pokemon.create({
-        name: lowerCaseName,
-        image,
-        hp,
-        attack,
-        defense,
-        speed,
-        height,
-        weight,
-        types
-    });
-    const typeDb = await Type.findAll(
-        {
-            where: {
-                name: types
+
+    const existingPokemon = await Pokemon.findOne({
+        where: { name: lowerCaseName }
+    })
+
+
+    if (existingPokemon) {
+        throw new Error("El Pokémon con este nombre ya existe en la base de datos.");
+    } else {
+        const newPokemon = await Pokemon.create({
+            name: lowerCaseName,
+            image,
+            hp,
+            attack,
+            defense,
+            speed,
+            height,
+            weight,
+            types
+        });
+        const typeDb = await Type.findAll(
+            {
+                where: {
+                    name: types
+                }
             }
-        }
-    )
-    newPokemon.addTypes(typeDb);
-    tipo = typeDb.map((item) => item.name);
-    return { ...newPokemon.dataValues, types: tipo };
+        )
+        newPokemon.addTypes(typeDb);
+        tipo = typeDb.map((item) => item.name);
+        return { ...newPokemon.dataValues, types: tipo };
+    }
 }
 
 
