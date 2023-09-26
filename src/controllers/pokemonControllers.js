@@ -118,7 +118,7 @@ const pokemonIdApi = async (id) => {
     const response = await axios.get(`${URL}${id}`);
     const { data } = response
     const pokemon = clearPokemon(data)
-    return [pokemon]
+    return pokemon
 }
 
 /* -------------------------------------------------------- */
