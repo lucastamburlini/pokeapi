@@ -23,6 +23,7 @@ const getAllPokemonsBdd = async () => {
     return await Pokemon.findAll({
         include: {
             model: Type,
+            as: 'types',
             attributes: ["name"],
             through: {
                 attributes: [],
@@ -54,6 +55,7 @@ const getAllPokemonsBddByName = async (name) => {
             },
             include: {
                 model: Type,
+                as: 'types',
                 attributes: ["name"],
                 through: {
                     attributes: [],
@@ -62,7 +64,7 @@ const getAllPokemonsBddByName = async (name) => {
         });
         return pokemons;
     } catch (error) {
-        console.error("Error:", error);
+        console.error("Error en la función getAllPokemonsBddByName:", error);
         throw error;
     }
 }
