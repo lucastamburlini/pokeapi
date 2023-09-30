@@ -103,6 +103,7 @@ const getPokemonById = async (id, source) => {
                 : await Pokemon.findByPk(id, {
                     include: {
                         model: Type,
+                        as: "types",
                         attributes: ["name"],
                         through: {
                             attributes: [],
