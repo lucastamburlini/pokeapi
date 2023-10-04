@@ -2,8 +2,8 @@ const { Pokemon, Type } = require("../db");
 const axios = require("axios");
 const { clearPokemon } = require("../utils");
 
-const URL = "https://pokeapi.co/api/v2/pokemon/";
-// const URL = "https://pokeapi.co/api/v2/pokemon/?limit=1229&offset=0";
+// const URL = "https://pokeapi.co/api/v2/pokemon/";
+const URL = "https://pokeapi.co/api/v2/pokemon/?limit=650&offset=0";
 
 /* -------------------------------------------------------- */
 // Funciones para traer a todos los pokemones
@@ -71,7 +71,7 @@ const getAllPokemonsBddByName = async (name) => {
 
 
 const pokemonByNameApi = async (name) => {
-    const response = await axios.get(`${URL}${name}`);
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const { data } = response
     const pokemon = clearPokemon(data)
     return pokemon
@@ -118,7 +118,7 @@ const getPokemonById = async (id, source) => {
 }
 
 const pokemonIdApi = async (id) => {
-    const response = await axios.get(`${URL}${id}`);
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const { data } = response
     const pokemon = clearPokemon(data)
     return pokemon
