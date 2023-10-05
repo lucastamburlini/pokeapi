@@ -110,7 +110,7 @@ const getPokemonById = async (id, source) => {
                         },
                     }
                 });
-        return [pokemon];
+        return pokemon;
     } catch (error) {
         console.error("Error al buscar el Pokémon por ID:", error);
         throw error;
