@@ -1,11 +1,11 @@
 const server = require('../src/app')
 const session = require('supertest')
-const agent = session(app)
+const agent = session(server)
 
 describe("Route test", () => {
-    describe("https://pokeapi.co/api/v2/pokemon/", () => {
-        it('Responds with status: 200', async ()=>{
-            await agent.get("pokemons/").expect(200)
-        })
+    describe("http://localhost:3001", () => {
+        it('Responds with status: 200', async () => {
+            await agent.get("/pokemons").expect(200)
+        }, 10000)
     })
 })

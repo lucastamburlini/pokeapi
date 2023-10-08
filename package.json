@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "mocha -w ./tests/**/*.spec.js"
+    "test": "jest --detectOpenHandles"
   },
   "author": "Henry",
   "license": "ISC",
