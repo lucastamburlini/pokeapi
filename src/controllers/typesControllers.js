@@ -6,7 +6,7 @@ const getTypesPokemons = async () => {
     try {
         // Verifico si hay tipos existentes.
         const existingTypes = await Type.findAll();
-        if (existingTypes.length == 0) {
+        if (existingTypes.length === 0) {
             // si la BD está vacía obtengo los tipos desde la api.
             const response = await axios.get("https://pokeapi.co/api/v2/type/")
             const { data } = response;

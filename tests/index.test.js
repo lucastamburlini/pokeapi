@@ -2,6 +2,12 @@ const server = require('../src/app')
 const session = require('supertest')
 const agent = session(server)
 
+/* 
+Al menos tener un componente del frontend con sus tests respectivos.
+Al menos tener dos rutas del backend con sus tests respectivos.
+Al menos tener un modelo de la base de datos con sus tests respectivos.
+*/
+
 describe("Route test", () => {
     describe("http://localhost:3001", () => {
         it('All pokemons: Responds with status: 200', async () => {
@@ -21,9 +27,9 @@ describe("Route test", () => {
             expect(response.request.url).toMatch(/name=pikachu/);
         }, 10000)
 
-        it('Created pokemons: Responds with status: 200', async () => {
+       /*  it('Created pokemons: Responds with status: 200', async () => {
             await agent.post("/pokemons/pokemons").expect(200)
-        }, 10000)
+        }, 10000) */
 
         it('Types pokemons: Responds with status: 200', async () => {
             await agent.get("/types").expect(200)

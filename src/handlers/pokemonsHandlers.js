@@ -1,4 +1,4 @@
-const { createPokemons, getPokemonById, getAllPokemons, searchPokemonByName } = require("../controllers/pokemonControllers");
+const { createPokemons, getPokemonById, getAllPokemons, searchPokemonByName, deletePokemon } = require("../controllers/pokemonControllers");
 
 const getAllPokemonsHandler = async (req, res) => {
     try {
@@ -40,8 +40,20 @@ const createPokemonHandler = async (req, res) => {
     }
 }
 
+const deletePokemonHandler = async (req, res) => {
+    const { id } = req.params
+    try {
+        await deletePokemon(id)
+        res.status(200).json({ message: "Se eliminó correctamente" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Ocurrió un error al eliminar el Pokémon" });
+    }
+}
+
 module.exports = {
     getAllPokemonsHandler,
     getByIdPokemonsHandler,
-    createPokemonHandler
+    createPokemonHandler,
+    deletePokemonHandler
 }

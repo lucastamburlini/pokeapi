@@ -174,11 +174,23 @@ const createPokemons = async (
     }
 }
 
+/* -------------------------------------------------------- */
+// Función para borrar un pokemon
+/* -------------------------------------------------------- */
+
+const deletePokemon = async (id) => {
+    try {
+        await Pokemon.destroy({ where: { id } })
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 
 module.exports = {
     createPokemons,
     getPokemonById,
     getAllPokemons,
-    searchPokemonByName
+    searchPokemonByName,
+    deletePokemon
 }
