@@ -8,7 +8,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/",
+      "dest": "/src/views/home.jsx",
       "status": 200
     }
   ]
