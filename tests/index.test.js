@@ -27,10 +27,6 @@ describe("Route test", () => {
             expect(response.request.url).toMatch(/name=pikachu/);
         }, 10000)
 
-       /*  it('Created pokemons: Responds with status: 200', async () => {
-            await agent.post("/pokemons/pokemons").expect(200)
-        }, 10000) */
-
         it('Types pokemons: Responds with status: 200', async () => {
             await agent.get("/types").expect(200)
         }, 10000)
