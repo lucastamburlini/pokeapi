@@ -1,17 +1,8 @@
 require('dotenv').config();
 const { Sequelize } = require('sequelize');
-const { DB_USER, DB_PASSWORD, DB_HOST, POSTGRES_URL } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_DEPLOY } = process.env;
 const PokemonModel = require("./models/Pokemon");
 const TypeModel = require("./models/Type");
-
-
-const sequelize = new Sequelize(
-   POSTGRES_URL,
-   {
-      logging: false,
-      native: false
-   }
-);
 
 /* const sequelize = new Sequelize(
    `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pokemon`,
@@ -19,8 +10,15 @@ const sequelize = new Sequelize(
       logging: false,
       native: false
    }
-);  */
+); */
 
+const sequelize = new Sequelize(
+   DB_DEPLOY,
+   {
+      logging: false,
+      native: false
+   }
+);
 
 // Models
 PokemonModel(sequelize);
