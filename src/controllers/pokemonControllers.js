@@ -3,7 +3,7 @@ const axios = require("axios");
 const { clearPokemon } = require("../utils");
 
 // const URL = "https://pokeapi.co/api/v2/pokemon/";
-const URL = "https://pokeapi.co/api/v2/pokemon/?limit=650&offset=0";
+const URL = "https://pokeapi.co/api/v2/pokemon/?limit=493&offset=0";
 
 /* -------------------------------------------------------- */
 // Funciones para traer a todos los pokemones
